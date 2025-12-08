@@ -85,56 +85,6 @@ portfolio/
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/Zygarde641/portfolio.git
-cd portfolio
-
-# Install frontend dependencies
-cd frontend
-npm install
-
-# Start development server
-npm run dev
-```
-
-The app will be running at `http://localhost:3000`
-
-### Backend (Optional)
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
----
-
-## 🔧 Environment Variables
-
-### Frontend (`frontend/.env.local`)
-```env
-NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
-NEXT_PUBLIC_GITHUB_USERNAME=Zygarde641
-```
-
-### Backend (`backend/.env`)
-```env
-PORT=5000
-FRONTEND_URL=http://localhost:3000
-GITHUB_TOKEN=your_github_token
-```
-
----
-
 ## 📄 API Endpoints
 
 | Endpoint | Method | Description |
@@ -155,18 +105,6 @@ GITHUB_TOKEN=your_github_token
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-
-| Landing Page | Projects Section |
-|:---:|:---:|
-| Geodesic sphere with music bars | Nebula background with 3D shapes |
-
-</div>
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
@@ -179,21 +117,11 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 👤 Author
 
 <div align="center">
 
 **Arjun Srivastava**
-
-[![GitHub](https://img.shields.io/badge/GitHub-Zygarde641-181717?style=for-the-badge&logo=github)](https://github.com/Zygarde641)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Arjun_Srivastava-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/arjun-srivastava-122303288/)
-[![Email](https://img.shields.io/badge/Email-zarjun641@gmail.com-EA4335?style=for-the-badge&logo=gmail)](mailto:zarjun641@gmail.com)
 
 </div>
 
