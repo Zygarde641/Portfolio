@@ -153,7 +153,7 @@ export default function Projects() {
     triggerOnce: true,
   })
 
-  const languages = ['all', ...new Set(repos.map((r) => r.language).filter(Boolean))]
+  const languages = ['all', ...Array.from(new Set(repos.map((r) => r.language).filter((lang): lang is string => Boolean(lang))))]
 
   const filteredRepos = filter === 'all'
     ? repos
