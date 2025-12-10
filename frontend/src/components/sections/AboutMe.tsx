@@ -243,8 +243,9 @@ export default function AboutMe() {
 
             {/* Download Resume Button */}
             <motion.a
-              href="/api/resume"
-              download
+              href="https://drive.google.com/file/d/1wZBfSoLDIPZbivSpnypI4ue1mxVnWkUe/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.9 }}
