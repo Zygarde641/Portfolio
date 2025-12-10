@@ -133,7 +133,7 @@ export default function AboutMe() {
                     className="flex items-center justify-center w-full h-full"
                     style={{ fontFamily: "'Times New Roman', serif" }}
                   >
-                    <span className="text-red-500 text-7xl font-bold">Z</span>
+                    <span className="text-[#ff0000] text-8xl md:text-9xl font-bold">Z</span>
                   </div>
                 </div>
               </motion.div>
