@@ -121,7 +121,7 @@ export default function AboutMe() {
                   />
                 </div>
 
-                {/* Back of coin (mirrors front) */}
+                {/* Back of coin (bold red 'Z') */}
                 <div
                   className="absolute inset-0 rounded-full border-4 border-red-500 overflow-hidden flex items-center justify-center bg-black"
                   style={{
@@ -129,33 +129,12 @@ export default function AboutMe() {
                     transform: 'rotateY(180deg)',
                   }}
                 >
-                  {/* Coin edge effect */}
-                  <div className="absolute inset-2 rounded-full border border-red-500/30" />
-                  <div className="absolute inset-4 rounded-full border border-red-500/20" />
-
-                  {/* Logo */}
-                  <div className="relative w-48 h-48 md:w-60 md:h-60">
-                    <Image
-                      src="/logo.png"
-                      alt="Arjun Srivastava"
-                      fill
-                      className="object-contain"
-                      priority
-                    />
+                  <div
+                    className="flex items-center justify-center w-full h-full"
+                    style={{ fontFamily: "'Times New Roman', serif" }}
+                  >
+                    <span className="text-red-500 text-7xl font-bold">Z</span>
                   </div>
-
-                  {/* Shine effect */}
-                  <motion.div
-                    animate={{
-                      x: ['-100%', '200%'],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                    }}
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
-                  />
                 </div>
               </motion.div>
 
