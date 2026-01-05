@@ -4,6 +4,12 @@ import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Heart } from 'lucide-react'
 import Link from 'next/link'
 
+const CodeforcesSvg = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" />
+  </svg>
+)
+
 const socialLinks = [
   {
     name: 'GitHub',
@@ -14,6 +20,11 @@ const socialLinks = [
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/arjun-srivastava-122303288/',
     icon: Linkedin,
+  },
+  {
+    name: 'Codeforces',
+    href: 'https://codeforces.com/profile/The__Two',
+    icon: CodeforcesSvg,
   },
   {
     name: 'Email',
@@ -42,7 +53,7 @@ export default function Footer() {
               Arjun<span className="text-accent">.</span>
             </Link>
             <p className="text-muted text-sm max-w-xs">
-              Full-stack developer passionate about creating beautiful, 
+              Full-stack developer passionate about creating beautiful,
               performant, and user-friendly web experiences.
             </p>
           </div>

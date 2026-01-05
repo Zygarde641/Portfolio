@@ -108,9 +108,8 @@ export default function MyExperiences() {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`relative flex flex-col md:flex-row gap-8 mb-12 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              } z-10`}
+              className={`relative flex flex-col md:flex-row gap-8 mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } z-10`}
             >
               {/* Timeline dot */}
               <div className="absolute left-0 md:left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 z-20">
@@ -123,9 +122,8 @@ export default function MyExperiences() {
 
               {/* Content */}
               <div
-                className={`flex-1 ml-8 md:ml-0 ${
-                  index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
-                }`}
+                className={`flex-1 ml-8 md:ml-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
+                  }`}
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -133,9 +131,8 @@ export default function MyExperiences() {
                 >
                   {/* Type badge */}
                   <div
-                    className={`flex items-center gap-2 mb-3 ${
-                      index % 2 === 0 ? 'md:justify-end' : ''
-                    }`}
+                    className={`flex items-center gap-2 mb-3 ${index % 2 === 0 ? 'md:justify-end' : ''
+                      }`}
                   >
                     {exp.type === 'work' ? (
                       <Briefcase className="w-4 h-4 text-red-500" />
@@ -155,9 +152,8 @@ export default function MyExperiences() {
 
                   {/* Meta info */}
                   <div
-                    className={`flex flex-wrap gap-4 text-sm text-gray-500 mb-4 ${
-                      index % 2 === 0 ? 'md:justify-end' : ''
-                    }`}
+                    className={`flex flex-wrap gap-4 text-sm text-gray-500 mb-4 ${index % 2 === 0 ? 'md:justify-end' : ''
+                      }`}
                   >
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
@@ -185,11 +181,10 @@ export default function MyExperiences() {
                           delay: index * 0.2 + i * 0.1 + 0.5,
                           duration: 0.4,
                         }}
-                        className={`flex items-start gap-2 text-sm ${
-                          index % 2 === 0
-                            ? 'md:flex-row-reverse md:text-right'
-                            : ''
-                        }`}
+                        className={`flex items-start gap-2 text-sm ${index % 2 === 0
+                          ? 'md:flex-row-reverse md:text-right'
+                          : ''
+                          }`}
                       >
                         <Award className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
                         <span className="text-gray-300">{achievement}</span>
@@ -257,6 +252,24 @@ export default function MyExperiences() {
             </a>
 
             <a
+              href="https://codeforces.com/profile/The__Two"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-6 py-3 bg-gray-900 border border-red-500/30 rounded-full hover:border-red-500 hover:bg-red-500/10 transition-all group"
+            >
+              <svg
+                className="w-6 h-6 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" />
+              </svg>
+              <span className="text-white group-hover:text-red-400 transition-colors">
+                Codeforces
+              </span>
+            </a>
+
+            <a
               href="mailto:zarjun641@gmail.com"
               className="flex items-center gap-3 px-6 py-3 bg-gray-900 border border-red-500/30 rounded-full hover:border-red-500 hover:bg-red-500/10 transition-all group"
             >
@@ -303,7 +316,7 @@ export default function MyExperiences() {
           </div>
 
           <a
-            href="https://drive.google.com/file/d/1K9aXkOPLRH3MdivD4iWj6ocJXXQ3W7I4/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1HFtQejKZwRgE_3Wpdt1Ef93d2OfcSVJ5/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-red-500 text-white font-semibold rounded-full hover:bg-red-600 transition-colors"

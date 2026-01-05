@@ -3,14 +3,6 @@
 # 🚀 Arjun Srivastava | Portfolio
 
 A stunning, interactive portfolio website featuring immersive 3D animations, music-reactive visualizations, and a sleek dark theme with red accents.
-
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-Latest-FF0055?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
-
-[Live Demo](https://arjun-portfolio.vercel.app) · [Report Bug](https://github.com/Zygarde641/portfolio/issues) · [Request Feature](https://github.com/Zygarde641/portfolio/issues)
-
 </div>
 
 ---
@@ -85,6 +77,56 @@ portfolio/
 
 ---
 
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Zygarde641/portfolio.git
+cd portfolio
+
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Start development server
+npm run dev
+```
+
+The app will be running at `http://localhost:3000`
+
+### Backend (Optional)
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+---
+
+## 🔧 Environment Variables
+
+### Frontend (`frontend/.env.local`)
+```env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+NEXT_PUBLIC_GITHUB_USERNAME=Zygarde641
+```
+
+### Backend (`backend/.env`)
+```env
+PORT=5000
+FRONTEND_URL=http://localhost:3000
+GITHUB_TOKEN=your_github_token
+```
+
+---
+
 ## 📄 API Endpoints
 
 | Endpoint | Method | Description |
@@ -105,11 +147,45 @@ portfolio/
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+| Landing Page | Projects Section |
+|:---:|:---:|
+| Geodesic sphere with music bars | Nebula background with 3D shapes |
+
+</div>
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
 ## 👤 Author
 
 <div align="center">
 
 **Arjun Srivastava**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Zygarde641-181717?style=for-the-badge&logo=github)](https://github.com/Zygarde641)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Arjun_Srivastava-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/arjun-srivastava-122303288/)
+[![Email](https://img.shields.io/badge/Email-zarjun641@gmail.com-EA4335?style=for-the-badge&logo=gmail)](mailto:zarjun641@gmail.com)
 
 </div>
 

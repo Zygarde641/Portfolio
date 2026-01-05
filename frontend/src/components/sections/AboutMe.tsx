@@ -17,10 +17,10 @@ export default function AboutMe() {
   const triggerFlip = useCallback(() => {
     if (isAnimating) return
     setIsAnimating(true)
-    
+
     // Single full rotation (720 degrees = 2 full spins)
     setRotation(prev => prev + 720)
-    
+
     setTimeout(() => {
       setIsAnimating(false)
     }, 1100)
@@ -38,9 +38,16 @@ export default function AboutMe() {
     }
   }, [isInView])
 
+  const CodeforcesSvg = () => (
+    <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" />
+    </svg>
+  )
+
   const socials = [
     { icon: Github, href: 'https://github.com/Zygarde641', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/arjun-srivastava-122303288/', label: 'LinkedIn' },
+    { icon: CodeforcesSvg, href: 'https://codeforces.com/profile/The__Two', label: 'Codeforces' },
     { icon: Mail, href: 'mailto:zarjun641@gmail.com', label: 'Email' },
   ]
 
@@ -73,8 +80,8 @@ export default function AboutMe() {
             transition={{ duration: 0.8 }}
             className="flex justify-center"
           >
-            <div 
-              className="relative cursor-pointer" 
+            <div
+              className="relative cursor-pointer"
               style={{ perspective: '1000px' }}
               onMouseEnter={triggerFlip}
             >
@@ -95,7 +102,7 @@ export default function AboutMe() {
                   {/* Coin edge effect */}
                   <div className="absolute inset-2 rounded-full border border-red-500/30" />
                   <div className="absolute inset-4 rounded-full border border-red-500/20" />
-                  
+
                   {/* Logo */}
                   <div className="relative w-48 h-48 md:w-60 md:h-60">
                     <Image
@@ -106,7 +113,7 @@ export default function AboutMe() {
                       priority
                     />
                   </div>
-                  
+
                   {/* Shine effect */}
                   <motion.div
                     animate={{
@@ -199,9 +206,9 @@ export default function AboutMe() {
               transition={{ delay: 0.5 }}
               className="text-gray-400 text-lg leading-relaxed mb-6"
             >
-              I build things that blend AI, full-stack engineering, and data analytics — 
-              from neural networks that interpret sign language to scalable web apps and 
-              management systems. I love taking ideas from &quot;this might work&quot; to 
+              I build things that blend AI, full-stack engineering, and data analytics —
+              from neural networks that interpret sign language to scalable web apps and
+              management systems. I love taking ideas from &quot;this might work&quot; to
               &quot;damn, this actually works.&quot;
             </motion.p>
 
@@ -211,9 +218,9 @@ export default function AboutMe() {
               transition={{ delay: 0.6 }}
               className="text-gray-400 text-lg leading-relaxed mb-8"
             >
-              Results-driven Software Developer and Data Analyst with hands-on experience 
-              in AI systems, full-stack development, and data visualization. Skilled in 
-              Python, SQL, machine learning, React, and Spring Boot with strong problem-solving 
+              Results-driven Software Developer and Data Analyst with hands-on experience
+              in AI systems, full-stack development, and data visualization. Skilled in
+              Python, SQL, machine learning, React, and Spring Boot with strong problem-solving
               and product-thinking abilities.
             </motion.p>
 
@@ -245,7 +252,7 @@ export default function AboutMe() {
 
             {/* Download Resume Button */}
             <motion.a
-              href="https://drive.google.com/file/d/1K9aXkOPLRH3MdivD4iWj6ocJXXQ3W7I4/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1HFtQejKZwRgE_3Wpdt1Ef93d2OfcSVJ5/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}

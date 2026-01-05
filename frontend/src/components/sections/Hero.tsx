@@ -28,7 +28,7 @@ export default function Hero() {
       </div>
 
       {/* Grid pattern overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -111,6 +111,17 @@ export default function Hero() {
               <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </a>
             <a
+              href="https://codeforces.com/profile/The__Two"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full bg-secondary hover:bg-accent/20 hover:text-accent transition-all duration-300 group"
+              aria-label="Codeforces"
+            >
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" />
+              </svg>
+            </a>
+            <a
               href="#contact"
               className="p-3 rounded-full bg-secondary hover:bg-accent/20 hover:text-accent transition-all duration-300 group"
             >
@@ -132,7 +143,7 @@ export default function Hero() {
               View My Work
             </a>
             <a
-              href="https://drive.google.com/file/d/1K9aXkOPLRH3MdivD4iWj6ocJXXQ3W7I4/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1HFtQejKZwRgE_3Wpdt1Ef93d2OfcSVJ5/view?usp=sharing"
               className="px-8 py-3 border border-border text-foreground font-semibold rounded-full hover:border-accent hover:text-accent transition-colors duration-300"
             >
               Download Resume
