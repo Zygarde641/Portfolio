@@ -163,7 +163,7 @@ export default function AboutMe() {
                   }}
                 >
                   <div
-                    className="w-1 h-1 rounded-full bg-red-500/50"
+                    className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(255,0,0,0.8)]"
                     style={{
                       position: 'absolute',
                       top: '50%',

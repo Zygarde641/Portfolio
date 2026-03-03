@@ -2,72 +2,67 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ExternalLink, Github } from 'lucide-react'
+import { Github } from 'lucide-react'
 
 const languageColors: Record<string, string> = {
   TypeScript: '#3178c6',
   JavaScript: '#f7df1e',
-  Python: '#3776ab',
-  Java: '#b07219',
-  'C++': '#f34b7d',
-  Go: '#00add8',
-  Rust: '#dea584',
-  HTML: '#e34c26',
-  CSS: '#563d7c',
-  SCSS: '#c6538c',
+  Python:     '#3776ab',
+  Java:       '#b07219',
+  'C++':      '#f34b7d',
+  Go:         '#00add8',
+  Rust:       '#dea584',
+  HTML:       '#e34c26',
+  CSS:        '#563d7c',
+  SCSS:       '#c6538c',
 }
 
-// Projects from resume and GitHub
 const projects = [
   {
     id: 1,
     name: 'Real-Time-Sign-Lang-decipher',
-    title: 'Sign Language Decipher (Neural Network Mode)',
-    description: 'A real-time sign language recognition system powered by deep learning. Uses MediaPipe hand tracking and transformer-based neural networks to translate sign language gestures into text. Processed 8000+ Phoenix dataset videos, extracted landmarks, and trained a custom NN for real-time inference.',
+    title: 'Sign Language Decipher',
+    description: 'Real-time sign language recognition using MediaPipe hand tracking and transformer-based neural networks. Processed 8000+ Phoenix dataset videos for live text translation.',
     language: 'Python',
-    period: 'December 2025 - Present',
+    period: 'Dec 2025',
     highlights: [
-      'Deep learning pipeline to convert sign-language video frames into text',
-      'Built a live prediction system using PyTorch, TensorFlow Lite',
-      'Custom video landmark pipeline for real-time inference',
+      'Deep learning pipeline from video frames to text',
+      'Live prediction via PyTorch & TensorFlow Lite',
     ],
   },
   {
     id: 2,
-    name: 'Multi-Factor-AI-Attendance-Tracking-System',
-    title: 'AI-Powered Attendance Tracking System',
-    description: 'AI-powered multi-factor attendance system using QR code verification, facial recognition, and IP self-validation. Ensures secure, proxy-proof attendance with real-time checks, time-restricted authentication.',
+    name: 'TaskMaster641',
+    title: 'TaskMaster641',
+    description: 'A privacy-first desktop to-do list/manager designed for meetings. Always-on-top notes that hide during screen sharing — anti-screenshare, with pin and transparency slider.',
     language: 'JavaScript',
-    period: 'December 2025',
+    period: '2025',
     highlights: [
-      'Full-stack MERN dynamic form builder with Airtable OAuth 2.0',
-      'Advanced conditional logic (AND/OR rules) with real-time data sync',
-      'Scalable backend with secure token refresh and webhook automation',
+      'Anti-screenshare: notes auto-hide during screen share',
+      'Always-on-top with customizable transparency slider',
     ],
   },
   {
     id: 3,
     name: 'Attendance-Class-System',
     title: 'Educational Management Platform',
-    description: 'A comprehensive attendance and class management system with teacher, student, and admin dashboards. Built with Next.js 14, React, TypeScript, Tailwind CSS, SQLite, JWT auth, and role-based access control.',
+    description: 'Comprehensive attendance & class management with teacher, student, and admin dashboards. Built with Next.js 14, TypeScript, SQLite, JWT auth, and role-based access.',
     language: 'TypeScript',
-    period: 'Sept 2025 - Nov 2025',
+    period: 'Sep–Nov 2025',
     highlights: [
-      'Complete school management system with dashboards for Admin, Teacher, and Student',
-      'Attendance, marks, analytics, exam scheduling, drag-and-drop class management',
-      'Notifications and role-based access control',
+      'Attendance, marks, analytics, exam scheduling',
+      'Role-based access: Admin / Teacher / Student',
     ],
   },
   {
     id: 4,
     name: 'Mern-Form-Builder',
     title: 'MERN Form Builder',
-    description: 'A full-stack MERN application that allows users to authenticate with Airtable, auto-generate dynamic forms from Airtable bases, apply conditional logic, and sync responses in real time through webhooks.',
+    description: 'Full-stack MERN app: authenticate with Airtable, auto-generate dynamic forms from Airtable bases, apply conditional logic, and sync responses in real time via webhooks.',
     language: 'JavaScript',
     period: '2024',
     highlights: [
       'Airtable OAuth 2.0 authentication',
-      'Auto-generate dynamic forms from Airtable bases',
       'Real-time sync through webhooks',
     ],
   },
@@ -75,25 +70,23 @@ const projects = [
     id: 5,
     name: 'Enhancing-Explainable-AI-with-Optimized-C5.0-for-Real-Time-Decision-Support-Systems-Dataset',
     title: 'Explainable AI with Optimized C5.0',
-    description: 'A C5.0-style decision tree optimization project featuring pre-pruning, post-pruning, combined pruning, and boosting. Includes comparison, full visual and performance insights on financial investment data.',
+    description: 'C5.0-style decision tree with pre-pruning, post-pruning, combined pruning, and boosting. Full visual and performance insights on financial investment data.',
     language: 'Python',
     period: '2024',
     highlights: [
-      'Decision tree optimization with multiple pruning strategies',
-      'Boosting implementation for improved accuracy',
-      'Visual and performance insights on financial data',
+      'Multiple pruning strategies + boosting',
+      'Visual insights on financial decision data',
     ],
   },
   {
     id: 6,
     name: 'Frontend',
     title: 'Frontend UI/UX Collection',
-    description: 'A bunch of small frontend, UI/UX projects committed to this repo for copying and pasting in future projects. A collection of reusable components and design patterns.',
+    description: 'A curated collection of small frontend & UI/UX projects committed for reuse. Reusable components and modern design patterns ready to copy-paste.',
     language: 'HTML',
     period: '2024',
     highlights: [
-      'Reusable UI components',
-      'Modern design patterns',
+      'Reusable UI components & design patterns',
       'Ready-to-use templates',
     ],
   },
@@ -101,106 +94,88 @@ const projects = [
 
 export default function MyProjects() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
     <section
       ref={ref}
       id="projects"
-      className="relative min-h-screen py-24 overflow-hidden"
+      className="relative min-h-screen overflow-y-auto overflow-x-hidden flex flex-col justify-center py-12 md:py-6"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent" />
-        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/20 to-transparent" />
+      {/* Subtle vertical line accents */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-6"
         >
-          <span className="text-red-500 font-mono text-sm tracking-widest">
-            MY WORK
-          </span>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mt-4 mb-6">
-            Projects
-          </h2>
-          <div className="w-24 h-0.5 bg-red-500 mx-auto" />
+          <span className="text-red-500 font-mono text-xs tracking-widest">MY WORK</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-3">Projects</h2>
+          <div className="w-20 h-0.5 bg-red-500 mx-auto" />
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5, borderColor: 'rgba(255, 51, 51, 0.5)' }}
-              className="group relative p-6 rounded-xl border border-gray-800 bg-black/50 backdrop-blur-sm hover:bg-gray-900/50 transition-all duration-300"
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              whileHover={{ y: -3, borderColor: 'rgba(255, 51, 51, 0.5)' }}
+              className="group relative p-4 rounded-xl border border-gray-800 bg-black/50 backdrop-blur-sm hover:bg-gray-900/50 transition-all duration-300 overflow-hidden"
             >
-              {/* Project number */}
-              <div className="absolute top-4 right-4 text-red-500/20 font-mono text-4xl font-bold">
+              {/* Watermark number */}
+              <div className="absolute top-2 right-3 text-red-500/15 font-mono text-3xl font-bold select-none">
                 {String(index + 1).padStart(2, '0')}
               </div>
 
-              {/* Content */}
-              <div className="relative">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white group-hover:text-red-500 transition-colors pr-8">
-                      {project.title}
-                    </h3>
-                    <div className="flex items-center gap-3 mt-2">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="w-3 h-3 rounded-full"
-                          style={{
-                            backgroundColor: languageColors[project.language] || '#888',
-                          }}
-                        />
-                        <span className="text-sm text-gray-500">
-                          {project.language}
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-600">{project.period}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* Highlights */}
-                <ul className="space-y-1 mb-4">
-                  {project.highlights.slice(0, 2).map((highlight, i) => (
-                    <li key={i} className="text-xs text-gray-500 flex items-start gap-2">
-                      <span className="text-red-500 mt-1">▹</span>
-                      <span className="line-clamp-1">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Links */}
-                <div className="flex gap-3">
-                  <a
-                    href={`https://github.com/Zygarde641/${project.name}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 text-sm transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                    View Code
-                  </a>
-                </div>
+              {/* Title + meta */}
+              <h3 className="text-sm font-semibold text-white group-hover:text-red-500 transition-colors pr-8 mb-1.5 leading-snug">
+                {project.title}
+              </h3>
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: languageColors[project.language] || '#888' }}
+                />
+                <span className="text-xs text-gray-500">{project.language}</span>
+                <span className="text-xs text-gray-600">· {project.period}</span>
               </div>
 
-              {/* Hover accent line */}
+              <p className="text-gray-400 text-xs mb-2.5 line-clamp-2 leading-relaxed">
+                {project.description}
+              </p>
+
+              {/* Highlights */}
+              <ul className="space-y-0.5 mb-3">
+                {project.highlights.map((h, i) => (
+                  <li key={i} className="text-xs text-gray-500 flex items-start gap-1.5">
+                    <span className="text-red-500 mt-0.5 flex-shrink-0">▹</span>
+                    <span className="line-clamp-1">{h}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* GitHub link */}
+              <a
+                href={`https://github.com/Zygarde641/${project.name}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 text-xs text-gray-300 transition-colors"
+              >
+                <Github className="w-3 h-3" />
+                View Code
+              </a>
+
+              {/* Hover bottom accent */}
               <motion.div
                 initial={{ scaleX: 0 }}
                 whileHover={{ scaleX: 1 }}
@@ -210,21 +185,21 @@ export default function MyProjects() {
           ))}
         </div>
 
-        {/* View All Link */}
+        {/* View all */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8 }}
-          className="text-center mt-12"
+          transition={{ delay: 0.7 }}
+          className="text-center"
         >
           <a
             href="https://github.com/Zygarde641?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-red-500/50 rounded-full text-red-500 hover:bg-red-500 hover:text-white transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2 border border-red-500/50 rounded-full text-red-500 hover:bg-red-500 hover:text-white transition-all text-sm"
           >
-            <Github className="w-5 h-5" />
-            View All Projects on GitHub
+            <Github className="w-4 h-4" />
+            View All on GitHub
           </a>
         </motion.div>
       </div>
@@ -233,7 +208,7 @@ export default function MyProjects() {
       <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
         <div className="w-px h-16 bg-red-500/30" />
         <span className="text-red-500 font-mono text-sm tracking-widest rotate-90 origin-center whitespace-nowrap">
-          02 / PROJECTS
+          03 / PROJECTS
         </span>
         <div className="w-px h-16 bg-red-500/30" />
       </div>

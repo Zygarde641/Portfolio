@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
 
 export default function WelcomePage() {
   return (
@@ -86,13 +85,14 @@ export default function WelcomePage() {
           transition={{ duration: 2, repeat: Infinity }}
           className="text-gray-500 text-sm tracking-widest mb-4"
         >
-          KEEP SCROLLING
+          KEEP GOING
         </motion.p>
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={{ x: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
+          className="text-red-500 text-xl"
         >
-          <ChevronDown className="w-6 h-6 text-red-500" />
+          →
         </motion.div>
       </motion.div>
 

@@ -332,7 +332,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
   }, [audioData, isPlaying, isMobile])
 
   return (
-    <div className="fixed inset-0 overflow-hidden z-20">
+    <div className="absolute inset-0 overflow-hidden z-20">
       <canvas ref={canvasRef} className="absolute inset-0" />
       
       {/* Click me button below the sphere */}
@@ -365,7 +365,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
             }}
           />
           <span className="text-red-500 font-bold text-base md:text-lg tracking-widest z-10">
-            CLICK ME
+            LET&apos;S BEGIN!
           </span>
         </motion.button>
       </div>
