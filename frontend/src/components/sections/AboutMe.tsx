@@ -252,7 +252,7 @@ export default function AboutMe() {
 
             {/* Download Resume Button */}
             <motion.a
-              href="https://drive.google.com/file/d/1HFtQejKZwRgE_3Wpdt1Ef93d2OfcSVJ5/view?usp=sharing"
+              href="https://drive.google.com/file/d/1LGjyr5Yzlwnp2JAPXSMtuuHxtnfzsbtO/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
