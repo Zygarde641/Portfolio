@@ -2,7 +2,7 @@
 
 # Arjun Srivastava — Portfolio
 
-An interactive developer portfolio built as an instrument panel: a music-reactive geodesic sphere, canvas-drawn 3D wireframes, and a horizontal-scroll deck of sections. Black, red `#ff3333`, and fast.
+Welcome to my interactive developer portfolio built as an instrument panel: a music-reactive geodesic sphere, canvas-drawn 3D wireframes, and a horizontal-scroll deck of sections. Black, red `#ff3333`, and fast.
 
 </div>
 
