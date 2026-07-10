@@ -38,6 +38,7 @@ export default function CustomCursor({ disabled = false }: CustomCursorProps) {
     document.documentElement.classList.add('hide-cursor')
     trail.style.display = 'block'
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let lastX = -100, lastY = -100
 
     const onMove = (e: MouseEvent) => {
@@ -52,7 +53,7 @@ export default function CustomCursor({ disabled = false }: CustomCursorProps) {
       // Spawn glitter
       const dx = x - lastX
       const dy = y - lastY
-      if (dx * dx + dy * dy > 30) {
+      if (!reduceMotion && dx * dx + dy * dy > 30) {
         spawnParticle(trail, x, y)
         lastX = x
         lastY = y

@@ -20,9 +20,11 @@ interface Triangle {
   v3: number
 }
 
+const NAME = 'ARJUN SRIVASTAVA'
+
 export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { audioData, isPlaying } = useMusicContext()
+  const { getAudioData, isPlaying } = useMusicContext()
   const [isHovering, setIsHovering] = useState(false)
   const timeRef = useRef(0)
   const mouseRef = useRef({ x: 0, y: 0 })
@@ -30,6 +32,9 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
   const targetRotationRef = useRef({ x: 0, y: 0 })
   const [isMobile, setIsMobile] = useState(false)
   const smoothedAudioRef = useRef<number[]>(new Array(128).fill(0))
+  // Mirror isPlaying into a ref so the draw loop reads it without rebuilding the scene
+  const isPlayingRef = useRef(isPlaying)
+  isPlayingRef.current = isPlaying
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768)
@@ -39,6 +44,8 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const resize = () => {
       canvas.width = window.innerWidth
@@ -74,26 +81,26 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
     const subdivide = (vertices: Vertex[], faces: Triangle[], iterations: number) => {
       let verts = [...vertices]
       let tris = [...faces]
-      
+
       for (let i = 0; i < iterations; i++) {
         const newTris: Triangle[] = []
         const midpointCache: { [key: string]: number } = {}
-        
+
         const getMidpoint = (i1: number, i2: number): number => {
           const key = i1 < i2 ? `${i1}_${i2}` : `${i2}_${i1}`
           if (midpointCache[key] !== undefined) return midpointCache[key]
-          
+
           const v1 = verts[i1], v2 = verts[i2]
           const mid = { x: (v1.x + v2.x) / 2, y: (v1.y + v2.y) / 2, z: (v1.z + v2.z) / 2 }
           const len = Math.sqrt(mid.x * mid.x + mid.y * mid.y + mid.z * mid.z)
           mid.x /= len; mid.y /= len; mid.z /= len
-          
+
           const idx = verts.length
           verts.push(mid)
           midpointCache[key] = idx
           return idx
         }
-        
+
         tris.forEach(tri => {
           const a = getMidpoint(tri.v1, tri.v2)
           const b = getMidpoint(tri.v2, tri.v3)
@@ -107,8 +114,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
 
     const subdivisions = isMobile ? 1 : 2
     const { vertices, faces } = subdivide(baseVertices, baseFaces, subdivisions)
-    const baseRadius = isMobile ? 80 : 100  // Smaller to fit inside music circle
-    
+
     // Create audio bars around the circle
     const barCount = isMobile ? 64 : 128
     const bars: { angle: number; baseLength: number }[] = []
@@ -118,7 +124,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
         baseLength: 3
       })
     }
-    
+
     // Beat detection
     let lastBassLevel = 0
     let beatDecay = 0
@@ -126,33 +132,34 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
     let animationId: number
 
     const animate = () => {
-      timeRef.current += 0.012
+      if (!reduceMotion) timeRef.current += 0.012
 
+      // Sphere sits in the upper zone; the name stack owns the lower 40%
       const centerX = canvas.width / 2
-      const centerY = canvas.height / 2 - 50
+      const centerY = canvas.height * 0.36
+      const baseRadius = Math.min(isMobile ? 80 : 100, canvas.height * 0.13)
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
+
       // Beat detection - react to sudden increases, not just volume
-      let currentBass = 0
-      let beatMultiplier = 1
-      
-      if (audioData && isPlaying) {
-        // Get bass frequencies
-        const bassSlice = audioData.slice(0, 8)
-        currentBass = bassSlice.reduce((a, b) => a + b, 0) / bassSlice.length / 255
-        
+      const audioData = isPlayingRef.current ? getAudioData() : null
+
+      if (audioData) {
+        // Get bass frequencies (avoid per-frame slice allocation)
+        let bassSum = 0
+        for (let i = 0; i < 8; i++) bassSum += audioData[i]
+        const currentBass = bassSum / 8 / 255
+
         // Detect beat (sudden increase in bass)
         const bassIncrease = currentBass - lastBassLevel
         if (bassIncrease > 0.1) {
           beatDecay = 1  // Trigger beat
         }
         lastBassLevel = currentBass * 0.8 + lastBassLevel * 0.2
-        
+
         // Decay the beat effect
         beatDecay *= 0.85
-        beatMultiplier = 1 + beatDecay * 2
-        
+
         // Smooth audio data with faster response
         for (let i = 0; i < smoothedAudioRef.current.length; i++) {
           const target = audioData[i] || 0
@@ -186,16 +193,16 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
       bars.forEach((bar, i) => {
         const audioIndex = Math.floor((i / bars.length) * smoothedAudioRef.current.length)
         const audioValue = smoothedAudioRef.current[audioIndex] || 0
-        
+
         // Dramatic short spikes - all red
         const beatBoost = 1 + beatDecay * 3
         const barLength = bar.baseLength + (audioValue / 255) * 40 * beatBoost
-        
+
         const innerX = centerX + Math.cos(bar.angle) * circleRadius
         const innerY = centerY + Math.sin(bar.angle) * circleRadius
         const outerX = centerX + Math.cos(bar.angle) * (circleRadius + barLength)
         const outerY = centerY + Math.sin(bar.angle) * (circleRadius + barLength)
-        
+
         const intensity = (audioValue / 255) * beatBoost
         ctx.beginPath()
         ctx.moveTo(innerX, innerY)
@@ -260,13 +267,13 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
 
       sortedFaces.forEach(({ avgZ, v1, v2, v3 }) => {
         const depthFactor = (avgZ + 1) / 2
-        
+
         ctx.beginPath()
         ctx.moveTo(centerX + v1.x * currentRadius, centerY + v1.y * currentRadius)
         ctx.lineTo(centerX + v2.x * currentRadius, centerY + v2.y * currentRadius)
         ctx.lineTo(centerX + v3.x * currentRadius, centerY + v3.y * currentRadius)
         ctx.closePath()
-        
+
         // Dark red fill - darker in back, brighter in front
         const brightness = 20 + depthFactor * 40
         ctx.fillStyle = `rgba(${brightness}, ${brightness * 0.15}, ${brightness * 0.15}, ${0.5 + depthFactor * 0.4})`
@@ -277,7 +284,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
       edges.forEach(edge => {
         const depthFactor = (edge.z + 1) / 2
         const alpha = 0.3 + depthFactor * 0.7
-        
+
         // Red gradient: dark red (back) to bright red (front)
         const r = Math.floor(150 + depthFactor * 105)
         const g = Math.floor(30 + depthFactor * 40)
@@ -313,7 +320,7 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
       ctx.arc(centerX, centerY, currentRadius * 0.5, 0, Math.PI * 2)
       ctx.fill()
 
-      animationId = requestAnimationFrame(animate)
+      if (!reduceMotion) animationId = requestAnimationFrame(animate)
     }
 
     animate()
@@ -322,68 +329,122 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
       mouseRef.current = { x: e.clientX, y: e.clientY }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    if (!reduceMotion) window.addEventListener('mousemove', handleMouseMove)
 
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationId)
     }
-  }, [audioData, isPlaying, isMobile])
+  }, [isMobile, getAudioData])
 
   return (
     <div className="absolute inset-0 overflow-hidden z-20">
       <canvas ref={canvasRef} className="absolute inset-0" />
-      
-      {/* Click me button below the sphere */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30">
-        <div className="h-56 md:h-72" />
-        
+
+      {/* Name + CTA stack — owns the zone below the sphere */}
+      <div className="absolute inset-x-0 top-[58%] bottom-0 z-30 flex flex-col items-center px-6 pointer-events-none">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.25, duration: 0.6 }}
+          className="font-mono text-[10px] md:text-xs tracking-[0.35em] text-neutral-500 mb-3"
+        >
+          PORTFOLIO — 2026
+        </motion.p>
+
+        <h1
+          aria-label={NAME}
+          className="font-display font-extrabold uppercase text-white text-center leading-[0.9] tracking-wide text-[clamp(2.75rem,9vw,6.5rem)] select-none"
+        >
+          {NAME.split('').map((ch, i) => (
+            <motion.span
+              key={i}
+              aria-hidden
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.035, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-block"
+            >
+              {ch === ' ' ? '\u00A0' : ch}
+            </motion.span>
+          ))}
+        </h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.15, duration: 0.6 }}
+          className="font-mono text-[10px] md:text-sm tracking-[0.25em] text-red-500 mt-3"
+        >
+          FULL-STACK DEVELOPER · DEVOPS · AI/ML
+        </motion.p>
+
         <motion.button
           onClick={onEnter}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
-          className="pointer-events-auto relative px-8 md:px-12 py-3 md:py-4 rounded-full border-2 border-red-500 bg-black/50 flex items-center justify-center cursor-pointer group mt-16 md:mt-20"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{
-            boxShadow: isHovering 
-              ? '0 0 40px rgba(255, 51, 51, 0.5)' 
-              : '0 0 20px rgba(255, 51, 51, 0.3)',
+            opacity: 1,
+            y: 0,
+            boxShadow: isHovering
+              ? '0 0 36px rgba(255, 51, 51, 0.45)'
+              : '0 0 16px rgba(255, 51, 51, 0.2)',
           }}
+          transition={{ delay: 1.35, duration: 0.5 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="group pointer-events-auto relative mt-7 md:mt-9 px-10 md:px-14 py-3.5 border border-red-500/70 bg-black/60 cursor-pointer"
         >
-          <motion.div
-            className="absolute inset-0 rounded-full border border-red-500"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.5, 0, 0.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <span className="text-red-500 font-bold text-base md:text-lg tracking-widest z-10">
-            LET&apos;S BEGIN!
+          {/* Corner ticks */}
+          <span className="absolute -top-px -left-px w-2.5 h-2.5 border-t-2 border-l-2 border-red-500 transition-all duration-300 group-hover:w-4 group-hover:h-4" />
+          <span className="absolute -top-px -right-px w-2.5 h-2.5 border-t-2 border-r-2 border-red-500 transition-all duration-300 group-hover:w-4 group-hover:h-4" />
+          <span className="absolute -bottom-px -left-px w-2.5 h-2.5 border-b-2 border-l-2 border-red-500 transition-all duration-300 group-hover:w-4 group-hover:h-4" />
+          <span className="absolute -bottom-px -right-px w-2.5 h-2.5 border-b-2 border-r-2 border-red-500 transition-all duration-300 group-hover:w-4 group-hover:h-4" />
+
+          <span className="font-mono text-red-500 text-sm md:text-base tracking-[0.3em]">
+            ▸ LET&apos;S BEGIN
           </span>
         </motion.button>
       </div>
 
-      {/* Corner decorations - hidden on mobile */}
-      <div className="hidden md:block absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-red-500/30" />
-      <div className="hidden md:block absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-red-500/30" />
-      <div className="hidden md:block absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-red-500/30" />
-      <div className="hidden md:block absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-red-500/30" />
-      
+      {/* Corner brackets */}
+      <div className="hidden md:block absolute top-8 left-8 w-14 h-14 border-l-2 border-t-2 border-red-500/25" />
+      <div className="hidden md:block absolute top-8 right-8 w-14 h-14 border-r-2 border-t-2 border-red-500/25" />
+      <div className="hidden md:block absolute bottom-8 left-8 w-14 h-14 border-l-2 border-b-2 border-red-500/25" />
+      <div className="hidden md:block absolute bottom-8 right-8 w-14 h-14 border-r-2 border-b-2 border-red-500/25" />
+
+      {/* Corner readouts */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        className="hidden md:block"
+      >
+        <p className="absolute top-11 left-16 font-mono text-[10px] tracking-[0.25em] text-neutral-600">
+          ARJUN SRIVASTAVA — PORTFOLIO
+        </p>
+        <p
+          className={`absolute top-11 right-16 font-mono text-[10px] tracking-[0.25em] ${
+            isPlaying ? 'text-red-500' : 'text-neutral-600'
+          }`}
+        >
+          {isPlaying ? '● SIGNAL LIVE' : '○ SIGNAL MUTED'}
+        </p>
+        <p className="absolute bottom-11 left-16 font-mono text-[10px] tracking-[0.25em] text-neutral-600">
+          EST. 2022 — CHANDIGARH, IN
+        </p>
+      </motion.div>
+
       {!isPlaying && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
-          className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 text-gray-600 text-xs md:text-sm text-center px-4"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-neutral-600 text-[10px] md:text-xs tracking-widest text-center px-4"
         >
-          Tap anywhere to enable music
+          TAP ANYWHERE TO ENABLE MUSIC
         </motion.div>
       )}
     </div>

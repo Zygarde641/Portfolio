@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 export default function HexagonBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: -1000, y: -1000 })
-  const scrollRef = useRef(0)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -16,6 +15,8 @@ export default function HexagonBackground() {
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     let time = 0
 
@@ -158,7 +159,7 @@ export default function HexagonBackground() {
         draw3DHexagon(hex.x, hex.y, hexSize - 1, hex.elevation)
       })
 
-      animationId = requestAnimationFrame(animate)
+      if (!reduceMotion) animationId = requestAnimationFrame(animate)
     }
 
     animate()
@@ -167,22 +168,18 @@ export default function HexagonBackground() {
       mouseRef.current = { x: e.clientX, y: e.clientY }
     }
 
-    const handleScroll = () => {
-      scrollRef.current = window.scrollY
-    }
-
     const handleMouseLeave = () => {
       mouseRef.current = { x: -1000, y: -1000 }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    document.addEventListener('mouseleave', handleMouseLeave)
+    if (!reduceMotion) {
+      window.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseleave', handleMouseLeave)
+    }
 
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('scroll', handleScroll)
       document.removeEventListener('mouseleave', handleMouseLeave)
       cancelAnimationFrame(animationId)
     }

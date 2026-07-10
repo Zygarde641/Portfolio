@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Briefcase, GraduationCap, Calendar, MapPin, Award } from 'lucide-react'
+import { Briefcase, GraduationCap } from 'lucide-react'
 
 // Ordered oldest → newest (left to right), so latest is on the right
 const experiences = [
@@ -10,15 +10,15 @@ const experiences = [
     id: 3,
     type: 'education',
     title: 'Bachelor of Engineering (CSE)',
-    organization: 'Chandigarh University, Mohali',
+    organization: 'Chandigarh University',
     location: 'Punjab, India',
-    period: 'Sep 2022 - Jun 2026',
+    period: 'Sep 2022 — Jun 2026',
     description:
-      'Specialization in Big Data Analytics. Studying software engineering, algorithms, data structures, ML, and web technologies.',
+      'Graduated with a specialization in Big Data Analytics — software engineering, algorithms, data structures, ML, and web technologies.',
     achievements: [
-      'Specialization in Big Data Analytics',
+      'Graduated, specializing in Big Data Analytics',
       'Led technical workshops and coding sessions',
-      'Participated in hackathons and coding competitions',
+      'Hackathons and competitive programming',
     ],
   },
   {
@@ -27,13 +27,13 @@ const experiences = [
     title: 'Data Analytics Intern',
     organization: 'Pawzz',
     location: 'Remote',
-    period: 'Jun 2024 - Jul 2024',
+    period: 'Jun 2024 — Jul 2024',
     description:
       'Data-driven analysis using Excel, SQL, Power BI, and IBM Cognos to track donations and optimize fundraising campaigns.',
     achievements: [
       'Built automated dashboards and visual reports',
       'Monitored rescue performance metrics',
-      'Streamlined workflow processes and reporting efficiency',
+      'Streamlined reporting workflows',
     ],
   },
   {
@@ -42,13 +42,29 @@ const experiences = [
     title: 'Full-Stack Developer & Internship Mentor',
     organization: 'NTS Nihon Global',
     location: 'Remote',
-    period: 'May 2025 - Jul 2025',
+    period: 'May 2025 — Jul 2025',
     description:
       'Led and mentored an intern developing a ride-booking app with booking, cancellation, and fare calculation logic.',
     achievements: [
       'Designed REST APIs using Spring Boot',
-      'Integrated APIs with React/TypeScript frontend',
+      'Modeled the data layer and service logic in Spring Boot',
       'Improved reliability through API optimization & testing',
+    ],
+  },
+  {
+    id: 0,
+    type: 'work',
+    title: 'DevOps Engineer',
+    organization: 'Altrodav Technologies',
+    location: 'Remote',
+    period: 'May 2026 — Present',
+    description:
+      'Building end-to-end delivery pipelines across GitHub Actions, AWS, Docker, and Kubernetes, with CloudWatch observability and streamlined releases.',
+    achievements: [
+      'Built end-to-end CI/CD pipelines with GitHub Actions',
+      'Containerized services on Docker & Kubernetes across AWS',
+      'Streamlined deployments and cut release lead time',
+      'Wired CloudWatch metrics, logs, and alerting',
     ],
   },
 ]
@@ -63,57 +79,52 @@ export default function MyExperiences() {
       id="experience"
       className="relative min-h-screen overflow-y-auto overflow-x-hidden flex flex-col justify-center py-12 md:py-16"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,51,51,0.5) 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
-          }}
-        />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-10 border-b border-hairline pb-5"
         >
-          <span className="text-red-500 font-mono text-xs tracking-widest">MY JOURNEY</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-4">Experience</h2>
-          <div className="w-20 h-0.5 bg-red-500 mx-auto" />
+          <div>
+            <span className="font-mono text-[11px] md:text-xs tracking-[0.3em] text-red-500">
+              04 / EXPERIENCE
+            </span>
+            <h2 className="font-display font-extrabold uppercase text-white text-5xl md:text-6xl mt-2 leading-none">
+              The Record<span className="text-red-500">.</span>
+            </h2>
+          </div>
+          <p className="font-mono text-[10px] md:text-xs tracking-[0.2em] text-neutral-500">
+            2022 — PRESENT, OLDEST → NEWEST
+          </p>
         </motion.div>
 
         {/* Horizontal Timeline */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Timeline line */}
+          {/* Timeline rail with nodes */}
           <div className="relative flex items-center mb-0">
-            {/* Thick horizontal line spanning all columns */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
               transition={{ duration: 1.1, ease: 'easeInOut' }}
-              className="absolute left-[16.67%] right-[16.67%] top-1/2 h-px bg-red-500/50 origin-left hidden md:block"
+              className="absolute left-[12.5%] right-[12.5%] top-1/2 h-px bg-red-500/50 origin-left hidden md:block"
             />
 
-            {/* Dots sit ON the line */}
-            <div className="grid grid-cols-1 md:grid-cols-3 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-4 w-full">
               {experiences.map((exp, index) => (
                 <div key={exp.id} className="flex justify-center">
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : {}}
                     transition={{ delay: 0.3 + index * 0.25, duration: 0.4 }}
-                    className="relative w-4 h-4 flex-shrink-0"
+                    className="relative w-3.5 h-3.5 flex-shrink-0"
                   >
-                    <div className="w-4 h-4 bg-red-500 rounded-full relative z-10 shadow-[0_0_10px_rgba(255,0,0,0.6)]">
+                    <div className="w-3.5 h-3.5 bg-red-500 rotate-45 relative z-10 shadow-[0_0_10px_rgba(255,0,0,0.6)]">
                       <motion.div
                         animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
                         transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                        className="absolute inset-0 rounded-full bg-red-500/40"
+                        className="absolute inset-0 bg-red-500/40"
                       />
                     </div>
                   </motion.div>
@@ -123,56 +134,54 @@ export default function MyExperiences() {
           </div>
 
           {/* Cards below the timeline */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-5 mt-6">
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.id}
                 initial={{ opacity: 0, y: 25 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.15 + index * 0.18 }}
-                whileHover={{ scale: 1.02 }}
-                className="p-4 rounded-xl border border-gray-800 bg-black/50 backdrop-blur-sm hover:border-red-500/50 transition-all flex flex-col"
+                className="group p-5 border border-hairline bg-panel/80 hover:border-red-500/50 transition-colors flex flex-col relative"
               >
-                {/* Type badge */}
-                <div className="flex items-center gap-2 mb-2">
-                  {exp.type === 'work' ? (
-                    <Briefcase className="w-3.5 h-3.5 text-red-500" />
-                  ) : (
-                    <GraduationCap className="w-3.5 h-3.5 text-red-500" />
-                  )}
-                  <span className="text-red-500 text-xs font-mono uppercase">{exp.type}</span>
+                <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                {/* Type + period */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {exp.type === 'work' ? (
+                      <Briefcase className="w-3.5 h-3.5 text-red-500" />
+                    ) : (
+                      <GraduationCap className="w-3.5 h-3.5 text-red-500" />
+                    )}
+                    <span className="text-red-500 text-[10px] font-mono tracking-[0.2em] uppercase">
+                      {exp.type}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-neutral-500">{exp.location}</span>
                 </div>
 
-                <h3 className="text-sm font-bold text-white mb-1 leading-snug">{exp.title}</h3>
-                <p className="text-gray-400 text-xs mb-2">{exp.organization}</p>
-
-                <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-3">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>{exp.period}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span>{exp.location}</span>
-                  </div>
-                </div>
+                <h3 className="font-display font-bold uppercase tracking-wide text-white text-xl leading-tight mb-1">
+                  {exp.organization}
+                </h3>
+                <p className="text-gray-300 text-xs mb-1">{exp.title}</p>
+                <p className="font-mono text-[10px] text-neutral-500 mb-3">{exp.period}</p>
 
                 <p className="text-gray-400 text-xs mb-3 leading-relaxed">{exp.description}</p>
 
-                <div className="space-y-1.5 mt-auto">
+                <ul className="space-y-1.5 mt-auto">
                   {exp.achievements.map((a, i) => (
-                    <motion.div
+                    <motion.li
                       key={i}
                       initial={{ opacity: 0, x: -8 }}
                       animate={isInView ? { opacity: 1, x: 0 } : {}}
                       transition={{ delay: 0.5 + index * 0.18 + i * 0.08 }}
                       className="flex items-start gap-1.5 text-xs"
                     >
-                      <Award className="w-3 h-3 text-red-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-red-500 mt-0.5 flex-shrink-0">▹</span>
                       <span className="text-gray-300">{a}</span>
-                    </motion.div>
+                    </motion.li>
                   ))}
-                </div>
+                </ul>
               </motion.div>
             ))}
           </div>
@@ -182,7 +191,7 @@ export default function MyExperiences() {
       {/* Section indicator */}
       <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
         <div className="w-px h-16 bg-red-500/30" />
-        <span className="text-red-500 font-mono text-sm tracking-widest rotate-90 origin-center whitespace-nowrap">
+        <span className="text-red-500 font-mono text-xs tracking-[0.25em] rotate-90 origin-center whitespace-nowrap">
           04 / EXPERIENCE
         </span>
         <div className="w-px h-16 bg-red-500/30" />

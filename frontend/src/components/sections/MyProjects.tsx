@@ -2,10 +2,9 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Github } from 'lucide-react'
+import { Github, ArrowUpRight } from 'lucide-react'
 
 const languageColors: Record<string, string> = {
-  TypeScript: '#3178c6',
   JavaScript: '#f7df1e',
   Python:     '#3776ab',
   Java:       '#b07219',
@@ -46,8 +45,8 @@ const projects = [
     id: 3,
     name: 'Attendance-Class-System',
     title: 'Educational Management Platform',
-    description: 'Comprehensive attendance & class management with teacher, student, and admin dashboards. Built with Next.js 14, TypeScript, SQLite, JWT auth, and role-based access.',
-    language: 'TypeScript',
+    description: 'Comprehensive attendance & class management with teacher, student, and admin dashboards. Built with Next.js 14, SQLite, JWT auth, and role-based access.',
+    language: 'JavaScript',
     period: 'Sep–Nov 2025',
     highlights: [
       'Attendance, marks, analytics, exam scheduling',
@@ -100,62 +99,67 @@ export default function MyProjects() {
     <section
       ref={ref}
       id="projects"
-      className="relative min-h-screen overflow-y-auto overflow-x-hidden flex flex-col justify-center py-12 md:py-6"
+      className="relative min-h-screen overflow-y-auto overflow-x-hidden flex flex-col justify-center py-12 md:py-8"
     >
-      {/* Subtle vertical line accents */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
-        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-red-500/15 to-transparent" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8 border-b border-hairline pb-5"
         >
-          <span className="text-red-500 font-mono text-xs tracking-widest">MY WORK</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-3">Projects</h2>
-          <div className="w-20 h-0.5 bg-red-500 mx-auto" />
+          <div>
+            <span className="font-mono text-[11px] md:text-xs tracking-[0.3em] text-red-500">
+              03 / PROJECTS
+            </span>
+            <h2 className="font-display font-extrabold uppercase text-white text-5xl md:text-6xl mt-2 leading-none">
+              Selected Work<span className="text-red-500">.</span>
+            </h2>
+          </div>
+          <p className="font-mono text-[10px] md:text-xs tracking-[0.2em] text-neutral-500">
+            06 REPOSITORIES — GITHUB / ZYGARDE641
+          </p>
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: index * 0.08 }}
-              whileHover={{ y: -3, borderColor: 'rgba(255, 51, 51, 0.5)' }}
-              className="group relative p-4 rounded-xl border border-gray-800 bg-black/50 backdrop-blur-sm hover:bg-gray-900/50 transition-all duration-300 overflow-hidden"
+              whileHover={{ y: -3 }}
+              className="group relative p-5 border border-hairline bg-panel/80 hover:border-red-500/50 transition-colors duration-300 flex flex-col"
             >
-              {/* Watermark number */}
-              <div className="absolute top-2 right-3 text-red-500/15 font-mono text-3xl font-bold select-none">
-                {String(index + 1).padStart(2, '0')}
+              {/* Corner tick on hover */}
+              <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              {/* Index + meta row */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-mono text-xs text-red-500">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500">
+                  <span
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: languageColors[project.language] || '#888' }}
+                  />
+                  {project.language} · {project.period}
+                </div>
               </div>
 
-              {/* Title + meta */}
-              <h3 className="text-sm font-semibold text-white group-hover:text-red-500 transition-colors pr-8 mb-1.5 leading-snug">
+              <h3 className="font-display font-bold uppercase tracking-wide text-white text-lg leading-tight mb-2 group-hover:text-red-500 transition-colors">
                 {project.title}
               </h3>
-              <div className="flex items-center gap-2 mb-2">
-                <span
-                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: languageColors[project.language] || '#888' }}
-                />
-                <span className="text-xs text-gray-500">{project.language}</span>
-                <span className="text-xs text-gray-600">· {project.period}</span>
-              </div>
 
-              <p className="text-gray-400 text-xs mb-2.5 line-clamp-2 leading-relaxed">
+              <p className="text-gray-400 text-xs mb-3 line-clamp-2 leading-relaxed">
                 {project.description}
               </p>
 
               {/* Highlights */}
-              <ul className="space-y-0.5 mb-3">
+              <ul className="space-y-1 mb-4">
                 {project.highlights.map((h, i) => (
                   <li key={i} className="text-xs text-gray-500 flex items-start gap-1.5">
                     <span className="text-red-500 mt-0.5 flex-shrink-0">▹</span>
@@ -169,18 +173,11 @@ export default function MyProjects() {
                 href={`https://github.com/Zygarde641/${project.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-700 hover:border-red-500 hover:text-red-500 text-xs text-gray-300 transition-colors"
+                className="mt-auto inline-flex items-center gap-1.5 self-start px-3 py-1.5 border border-hairline hover:border-red-500 hover:text-red-500 font-mono text-[11px] tracking-[0.15em] text-gray-300 transition-colors"
               >
                 <Github className="w-3 h-3" />
-                View Code
+                VIEW CODE
               </a>
-
-              {/* Hover bottom accent */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500 origin-left"
-              />
             </motion.div>
           ))}
         </div>
@@ -196,10 +193,10 @@ export default function MyProjects() {
             href="https://github.com/Zygarde641?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2 border border-red-500/50 rounded-full text-red-500 hover:bg-red-500 hover:text-white transition-all text-sm"
+            className="inline-flex items-center gap-2 px-6 py-2.5 border border-red-500/50 font-mono text-xs tracking-[0.2em] text-red-500 hover:bg-red-500 hover:text-white transition-colors"
           >
-            <Github className="w-4 h-4" />
-            View All on GitHub
+            ALL REPOSITORIES
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </motion.div>
       </div>
@@ -207,7 +204,7 @@ export default function MyProjects() {
       {/* Section indicator */}
       <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
         <div className="w-px h-16 bg-red-500/30" />
-        <span className="text-red-500 font-mono text-sm tracking-widest rotate-90 origin-center whitespace-nowrap">
+        <span className="text-red-500 font-mono text-xs tracking-[0.25em] rotate-90 origin-center whitespace-nowrap">
           03 / PROJECTS
         </span>
         <div className="w-px h-16 bg-red-500/30" />

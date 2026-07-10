@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
 import { MusicProvider } from '@/components/MusicPlayer'
 import FloatingSpheres from '@/components/FloatingSpheres'
 import HexagonBackground from '@/components/HexagonBackground'
@@ -49,6 +49,7 @@ export default function Home() {
   }, [])
 
   return (
+    <MotionConfig reducedMotion="user">
     <MusicProvider>
       <CustomCursor disabled={showIntro} />
 
@@ -113,5 +114,6 @@ export default function Home() {
         )}
       </AnimatePresence>
     </MusicProvider>
+    </MotionConfig>
   )
 }

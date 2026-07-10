@@ -32,6 +32,8 @@ export default function FloatingSpheres() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -188,7 +190,7 @@ export default function FloatingSpheres() {
         })
       })
 
-      animationId = requestAnimationFrame(animate)
+      if (!reduceMotion) animationId = requestAnimationFrame(animate)
     }
 
     animate()
@@ -201,8 +203,10 @@ export default function FloatingSpheres() {
       mouseRef.current = { x: -1000, y: -1000 }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseleave', handleMouseLeave)
+    if (!reduceMotion) {
+      window.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseleave', handleMouseLeave)
+    }
 
     return () => {
       window.removeEventListener('resize', resize)
