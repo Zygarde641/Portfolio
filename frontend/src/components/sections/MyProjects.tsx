@@ -55,14 +55,14 @@ const projects = [
   },
   {
     id: 4,
-    name: 'Mern-Form-Builder',
-    title: 'MERN Form Builder',
-    description: 'Full-stack MERN app: authenticate with Airtable, auto-generate dynamic forms from Airtable bases, apply conditional logic, and sync responses in real time via webhooks.',
+    name: 'DebateGuard',
+    title: 'DebateGuard AI',
+    description: 'Real-time debate fact-checker and fallacy detector. Streams mic audio through Deepgram, then a two-stage Claude pipeline (web-search fact-check) fires a ding and a sourced correction card the moment a claim is wrong or fallacious.',
     language: 'JavaScript',
-    period: '2024',
+    period: '2026',
     highlights: [
-      'Airtable OAuth 2.0 authentication',
-      'Real-time sync through webhooks',
+      'Deepgram live STT + two-stage Claude web-search pipeline',
+      'Detects 21 fallacy types with sourced corrections',
     ],
   },
   {
