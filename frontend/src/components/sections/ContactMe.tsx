@@ -6,7 +6,6 @@ import { Zap, FlaskConical, BookOpen, ArrowUpRight } from 'lucide-react'
 
 const channels = [
   { label: 'EMAIL', value: 'zarjun641@gmail.com', href: 'mailto:zarjun641@gmail.com' },
-  { label: 'PHONE', value: '+91 91255 45599', href: 'tel:+919125545599' },
   { label: 'GITHUB', value: 'github.com/Zygarde641', href: 'https://github.com/Zygarde641' },
   {
     label: 'LINKEDIN',
