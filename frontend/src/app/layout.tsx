@@ -20,13 +20,21 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-nine-navy-83.vercel.app'),
-  title: 'Arjun Srivastava | Full-Stack Developer',
+  metadataBase: new URL('https://arjun-sri-portfolio.vercel.app'),
+  title: 'Arjun Sri | Software Engineer, DevOps & Full-Stack Developer',
   description:
-    'Full-stack software developer with DevOps experience and AI/ML exposure — React, Next.js, Node, Docker, Kubernetes, AWS.',
+    'Arjun Sri (Arjun Sri Dev) — Software Engineer and Full-Stack Developer with DevOps and AI/ML experience. Chandigarh University alumnus working with React, Next.js, Node, Docker, Kubernetes, and AWS.',
   keywords: [
+    'Arjun Sri',
+    'Arjun Sri Dev',
+    'Arjun Sri Chandigarh University',
+    'Arjun Sri Software Engineer',
+    'Arjun Sri DevOps',
+    'Arjun Sri Full Stack Developer',
+    'Software Engineer',
     'Full-Stack Developer',
     'DevOps',
+    'Chandigarh University',
     'React',
     'Next.js',
     'Node.js',
@@ -34,13 +42,62 @@ export const metadata: Metadata = {
     'AWS',
     'AI/ML',
   ],
-  authors: [{ name: 'Arjun Srivastava' }],
-  openGraph: {
-    title: 'Arjun Srivastava | Full-Stack Developer',
-    description:
-      'Full-stack software developer with DevOps experience and AI/ML exposure.',
-    type: 'website',
+  authors: [{ name: 'Arjun Sri' }],
+  creator: 'Arjun Sri',
+  alternates: {
+    canonical: '/',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    title: 'Arjun Sri | Software Engineer, DevOps & Full-Stack Developer',
+    description:
+      'Arjun Sri (Arjun Sri Dev) — Software Engineer and Full-Stack Developer with DevOps and AI/ML experience. Chandigarh University alumnus.',
+    url: '/',
+    siteName: 'Arjun Sri',
+    type: 'website',
+    locale: 'en_US',
+    images: [
+      {
+        url: '/logo.png',
+        width: 700,
+        height: 700,
+        alt: 'Arjun Sri — Software Engineer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Arjun Sri | Software Engineer, DevOps & Full-Stack Developer',
+    description:
+      'Arjun Sri (Arjun Sri Dev) — Software Engineer and Full-Stack Developer with DevOps and AI/ML experience. Chandigarh University alumnus.',
+    images: ['/logo.png'],
+  },
+}
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Arjun Sri',
+  alternateName: ['Arjun Sri Dev', 'Arjun Srivastava'],
+  jobTitle: 'Software Engineer',
+  url: 'https://arjun-sri-portfolio.vercel.app',
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Chandigarh University',
+  },
+  email: 'mailto:zarjun641@gmail.com',
+  sameAs: [
+    'https://github.com/Zygarde641',
+    'https://www.linkedin.com/in/arjun-sri-dev',
+    'https://codeforces.com/profile/The__Two',
+  ],
 }
 
 export default function RootLayout({
@@ -53,6 +110,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bigShoulders.variable} ${plexMono.variable} font-sans bg-black text-white antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         {children}
       </body>
     </html>
