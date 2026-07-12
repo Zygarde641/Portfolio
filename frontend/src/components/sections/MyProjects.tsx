@@ -18,15 +18,15 @@ const languageColors: Record<string, string> = {
 
 const projects = [
   {
-    id: 1,
-    name: 'Real-Time-Sign-Lang-decipher',
-    title: 'Sign Language Decipher',
-    description: 'Real-time sign language recognition using MediaPipe hand tracking and transformer-based neural networks. Processed 8000+ Phoenix dataset videos for live text translation.',
-    language: 'Python',
-    period: 'Dec 2025',
+    id: 4,
+    name: 'DebateGuard',
+    title: 'DebateGuard AI',
+    description: 'Real-time debate fact-checker and fallacy detector. Streams mic audio through Deepgram, then a two-stage Claude pipeline (web-search fact-check) fires a ding and a sourced correction card the moment a claim is wrong or fallacious.',
+    language: 'JavaScript',
+    period: '2026',
     highlights: [
-      'Deep learning pipeline from video frames to text',
-      'Live prediction via PyTorch & TensorFlow Lite',
+      'Deepgram live STT + two-stage Claude web-search pipeline',
+      'Detects 21 fallacy types with sourced corrections',
     ],
   },
   {
@@ -42,6 +42,18 @@ const projects = [
     ],
   },
   {
+    id: 1,
+    name: 'Real-Time-Sign-Lang-decipher',
+    title: 'Sign Language Decipher',
+    description: 'Real-time sign language recognition using MediaPipe hand tracking and transformer-based neural networks. Processed 8000+ Phoenix dataset videos for live text translation.',
+    language: 'Python',
+    period: 'Dec 2025',
+    highlights: [
+      'Deep learning pipeline from video frames to text',
+      'Live prediction via PyTorch & TensorFlow Lite',
+    ],
+  },
+  {
     id: 3,
     name: 'Attendance-Class-System',
     title: 'Educational Management Platform',
@@ -51,18 +63,6 @@ const projects = [
     highlights: [
       'Attendance, marks, analytics, exam scheduling',
       'Role-based access: Admin / Teacher / Student',
-    ],
-  },
-  {
-    id: 4,
-    name: 'DebateGuard',
-    title: 'DebateGuard AI',
-    description: 'Real-time debate fact-checker and fallacy detector. Streams mic audio through Deepgram, then a two-stage Claude pipeline (web-search fact-check) fires a ding and a sourced correction card the moment a claim is wrong or fallacious.',
-    language: 'JavaScript',
-    period: '2026',
-    highlights: [
-      'Deepgram live STT + two-stage Claude web-search pipeline',
-      'Detects 21 fallacy types with sourced corrections',
     ],
   },
   {
