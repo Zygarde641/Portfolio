@@ -7,7 +7,7 @@ import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 import TechStack from '../TechStack'
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1LGjyr5Yzlwnp2JAPXSMtuuHxtnfzsbtO/view?usp=sharing'
+  'https://drive.google.com/file/d/1tGCacYHYwBKLtvuOKNRpgAjL3Iubr84T/view?usp=sharing'
 
 export default function AboutMe() {
   const ref = useRef(null)

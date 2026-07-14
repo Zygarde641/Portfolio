@@ -20,7 +20,7 @@ const channels = [
   {
     label: 'RESUME',
     value: 'View on Google Drive',
-    href: 'https://drive.google.com/file/d/1LGjyr5Yzlwnp2JAPXSMtuuHxtnfzsbtO/view?usp=sharing',
+    href: 'https://drive.google.com/file/d/1tGCacYHYwBKLtvuOKNRpgAjL3Iubr84T/view?usp=sharing',
   },
 ]
 
