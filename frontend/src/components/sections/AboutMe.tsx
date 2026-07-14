@@ -187,7 +187,7 @@ export default function AboutMe() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.5 + index * 0.08 }}
-                  className="p-2.5 border border-hairline bg-panel hover:border-red-500/60 transition-colors"
+                  className="p-2.5 border border-hairline glass hover:border-red-500/60 transition-colors"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5 text-red-500" />
@@ -203,7 +203,7 @@ export default function AboutMe() {
                 transition={{ delay: 0.8 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white font-mono text-xs md:text-sm tracking-[0.2em] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded bg-red-500 hover:bg-red-600 text-white font-mono text-xs md:text-sm tracking-[0.2em] transition-colors"
               >
                 VIEW RESUME
                 <ArrowUpRight className="w-4 h-4" />

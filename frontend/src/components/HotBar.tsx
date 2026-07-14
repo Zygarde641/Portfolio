@@ -26,8 +26,8 @@ export default function HotBar({ activeSection, onNavigate }: HotBarProps) {
       className="fixed top-0 left-0 right-0 z-[9000] flex justify-center items-center py-2.5 px-4"
       style={{
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+        backdropFilter: 'blur(14px) saturate(140%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(140%)',
       }}
     >
       {/* Bottom hairline accent */}

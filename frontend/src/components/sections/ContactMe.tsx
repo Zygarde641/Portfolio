@@ -75,7 +75,7 @@ export default function ContactMe() {
         </motion.div>
 
         {/* Channel ledger */}
-        <div className="border-t border-hairline">
+        <div className="glass border border-hairline divide-y divide-hairline overflow-hidden">
           {channels.map((c, i) => (
             <motion.a
               key={c.label}
@@ -85,7 +85,7 @@ export default function ContactMe() {
               initial={{ opacity: 0, x: -16 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.15 + i * 0.07 }}
-              className="group flex items-center justify-between gap-4 py-3.5 border-b border-hairline hover:bg-panel transition-colors px-2 md:px-3"
+              className="group flex items-center justify-between gap-4 py-3.5 hover:bg-white/[0.04] transition-colors px-3 md:px-4"
             >
               <span className="font-mono text-[11px] md:text-xs tracking-[0.25em] text-neutral-500 group-hover:text-red-500 transition-colors w-28 md:w-36 flex-shrink-0">
                 {c.label}
@@ -116,9 +116,9 @@ export default function ContactMe() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.6 + index * 0.12 }}
-                className="group relative p-5 border border-hairline bg-panel/80 hover:border-red-500/50 transition-colors"
+                className="group relative p-5 border border-hairline glass hover:border-red-500/50 transition-colors"
               >
-                <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 <div className="flex items-center justify-between mb-3">
                   <item.icon className="w-5 h-5 text-red-500" />

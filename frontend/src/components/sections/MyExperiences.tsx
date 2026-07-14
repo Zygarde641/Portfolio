@@ -141,9 +141,9 @@ export default function MyExperiences() {
                 initial={{ opacity: 0, y: 25 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.15 + index * 0.18 }}
-                className="group p-5 border border-hairline bg-panel/80 hover:border-red-500/50 transition-colors flex flex-col relative"
+                className="group p-5 border border-hairline glass hover:border-red-500/50 transition-colors flex flex-col relative"
               >
-                <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 {/* Type + period */}
                 <div className="flex items-center justify-between mb-3">

@@ -153,7 +153,7 @@ export function MusicProvider({ children }: MusicPlayerProps) {
               animate={{ opacity: 1, width: 'auto', x: 0 }}
               exit={{ opacity: 0, width: 0, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="flex items-center bg-black/85 px-3 py-2 border border-hairline"
+              className="flex items-center glass px-3 py-2 border border-hairline"
             >
               <input
                 type="range"
@@ -175,7 +175,7 @@ export function MusicProvider({ children }: MusicPlayerProps) {
         {/* Volume button */}
         <button
           onClick={togglePlay}
-          className="relative p-3 bg-black/60 border border-hairline hover:border-red-500 transition-all group"
+          className="relative p-3 glass border border-hairline hover:border-red-500 transition-all group"
           aria-label={isPlaying ? 'Mute music' : 'Play music'}
         >
           {isPlaying ? (
@@ -186,7 +186,7 @@ export function MusicProvider({ children }: MusicPlayerProps) {
 
           {/* Pulse animation when playing */}
           {isPlaying && (
-            <span className="absolute inset-0 border border-red-500 animate-ping opacity-30" />
+            <span className="absolute inset-0 rounded-lg border border-red-500 animate-ping opacity-30" />
           )}
         </button>
       </div>

@@ -131,10 +131,10 @@ export default function MyProjects() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: index * 0.08 }}
               whileHover={{ y: -3 }}
-              className="group relative p-5 border border-hairline bg-panel/80 hover:border-red-500/50 transition-colors duration-300 flex flex-col"
+              className="group relative p-5 border border-hairline glass hover:border-red-500/50 transition-colors duration-300 flex flex-col"
             >
               {/* Corner tick on hover */}
-              <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
 
               {/* Index + meta row */}
               <div className="flex items-center justify-between mb-3">
@@ -173,7 +173,7 @@ export default function MyProjects() {
                 href={`https://github.com/Zygarde641/${project.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center gap-1.5 self-start px-3 py-1.5 border border-hairline hover:border-red-500 hover:text-red-500 font-mono text-[11px] tracking-[0.15em] text-gray-300 transition-colors"
+                className="mt-auto inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded border border-hairline hover:border-red-500 hover:text-red-500 font-mono text-[11px] tracking-[0.15em] text-gray-300 transition-colors"
               >
                 <Github className="w-3 h-3" />
                 VIEW CODE
@@ -193,7 +193,7 @@ export default function MyProjects() {
             href="https://github.com/Zygarde641?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 border border-red-500/50 font-mono text-xs tracking-[0.2em] text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded border border-red-500/50 font-mono text-xs tracking-[0.2em] text-red-500 hover:bg-red-500 hover:text-white transition-colors"
           >
             ALL REPOSITORIES
             <ArrowUpRight className="w-3.5 h-3.5" />

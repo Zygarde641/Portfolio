@@ -46,7 +46,7 @@ export default function TechStack() {
               {cluster.items.map(item => (
                 <span
                   key={item}
-                  className="px-2.5 py-1 border border-hairline bg-panel font-mono text-xs text-neutral-300 hover:border-red-500/60 hover:text-white transition-colors cursor-default"
+                  className="px-2.5 py-1 rounded border border-hairline bg-white/[0.04] font-mono text-xs text-neutral-300 hover:border-red-500/60 hover:text-white transition-colors cursor-default"
                 >
                   {item}
                 </span>
