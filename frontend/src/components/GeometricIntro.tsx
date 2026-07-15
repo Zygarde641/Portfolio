@@ -115,15 +115,29 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
     const subdivisions = isMobile ? 1 : 2
     const { vertices, faces } = subdivide(baseVertices, baseFaces, subdivisions)
 
-    // Create audio bars around the circle
+    // Twinkling background stars
+    const stars = Array.from({ length: 140 }, () => ({
+      x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.3, p: Math.random() * 6.28
+    }))
+
+    // Audio-reactive angle samples, used to draw Saturn-style rings around the sphere
     const barCount = isMobile ? 64 : 128
-    const bars: { angle: number; baseLength: number }[] = []
+    const angles: number[] = []
     for (let i = 0; i < barCount; i++) {
-      bars.push({
-        angle: (i / barCount) * Math.PI * 2 - Math.PI / 2,
-        baseLength: 3
-      })
+      angles.push((i / barCount) * Math.PI * 2 - Math.PI / 2)
     }
+
+    // Tilted ellipse rings, like Saturn's rings seen at an angle.
+    // BASE_TILT/BASE_SQUASH are the resting orientation; the cursor nudges them each frame.
+    const BASE_TILT = -0.38
+    const BASE_SQUASH = 0.28
+    const RING_BANDS = [
+      { mult: 1.32, intensity: 0.5 },
+      { mult: 1.55, intensity: 0.66 },
+      { mult: 1.80, intensity: 0.8 },
+      { mult: 2.06, intensity: 0.9 },
+      { mult: 2.34, intensity: 1 }
+    ]
 
     // Beat detection
     let lastBassLevel = 0
@@ -141,21 +155,30 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+      // Background stars
+      stars.forEach(s => {
+        ctx.globalAlpha = 0.25 + 0.35 * Math.abs(Math.sin(timeRef.current + s.p))
+        ctx.fillStyle = '#9a9aa2'
+        ctx.fillRect(s.x * canvas.width, s.y * canvas.height, s.r, s.r)
+      })
+      ctx.globalAlpha = 1
+
       // Beat detection - react to sudden increases, not just volume
       const audioData = isPlayingRef.current ? getAudioData() : null
+      let bass = lastBassLevel
 
       if (audioData) {
         // Get bass frequencies (avoid per-frame slice allocation)
         let bassSum = 0
         for (let i = 0; i < 8; i++) bassSum += audioData[i]
-        const currentBass = bassSum / 8 / 255
+        bass = bassSum / 8 / 255
 
         // Detect beat (sudden increase in bass)
-        const bassIncrease = currentBass - lastBassLevel
+        const bassIncrease = bass - lastBassLevel
         if (bassIncrease > 0.1) {
           beatDecay = 1  // Trigger beat
         }
-        lastBassLevel = currentBass * 0.8 + lastBassLevel * 0.2
+        lastBassLevel = bass * 0.8 + lastBassLevel * 0.2
 
         // Decay the beat effect
         beatDecay *= 0.85
@@ -184,41 +207,90 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
       const autoRotY = timeRef.current * 0.15
       const autoRotX = Math.sin(timeRef.current * 0.08) * 0.15
 
+      // Ring orientation follows the cursor: horizontal cursor turns the ring plane,
+      // vertical cursor opens or flattens it. Reuses the same smoothed rotation the sphere uses.
+      // Tilt is clamped so it always keeps a Saturn lean and never crosses to a flat horizontal band.
+      const ringTilt = Math.max(-0.85, Math.min(-0.24, BASE_TILT + rotationRef.current.y * 1.6))
+      const ringSquash = Math.max(0.2, Math.min(0.5, BASE_SQUASH + rotationRef.current.x * 1.1))
+      const cosT = Math.cos(ringTilt), sinT = Math.sin(ringTilt)
+
       // Audio reactivity - beat-based bounce
       const pulseScale = 1 + beatDecay * 0.25
       const currentRadius = baseRadius * pulseScale
 
-      // Draw music-reactive bars around the circle FIRST (behind sphere)
-      const circleRadius = baseRadius + 25  // Music circle outside sphere
-      bars.forEach((bar, i) => {
-        const audioIndex = Math.floor((i / bars.length) * smoothedAudioRef.current.length)
-        const audioValue = smoothedAudioRef.current[audioIndex] || 0
-
-        // Dramatic short spikes - all red
-        const beatBoost = 1 + beatDecay * 3
-        const barLength = bar.baseLength + (audioValue / 255) * 40 * beatBoost
-
-        const innerX = centerX + Math.cos(bar.angle) * circleRadius
-        const innerY = centerY + Math.sin(bar.angle) * circleRadius
-        const outerX = centerX + Math.cos(bar.angle) * (circleRadius + barLength)
-        const outerY = centerY + Math.sin(bar.angle) * (circleRadius + barLength)
-
-        const intensity = (audioValue / 255) * beatBoost
-        ctx.beginPath()
-        ctx.moveTo(innerX, innerY)
-        ctx.lineTo(outerX, outerY)
-        // Pure red - no yellow
-        ctx.strokeStyle = `rgba(255, ${20 + intensity * 30}, ${20 + intensity * 30}, ${0.6 + Math.min(intensity, 1) * 0.4})`
-        ctx.lineWidth = 2 + intensity * 0.5
-        ctx.stroke()
-      })
-
-      // Draw base circle
+      // Ambient glow bloom behind the sphere — layered for a deeper, atmospheric mood
+      const glowR = currentRadius * (2.6 + bass * 1.0)
+      const glow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowR)
+      glow.addColorStop(0, `rgba(255, 0, 0, ${0.2 + bass * 0.26})`)
+      glow.addColorStop(0.35, `rgba(200, 0, 0, ${0.1 + bass * 0.16})`)
+      glow.addColorStop(1, 'rgba(110, 0, 0, 0)')
+      ctx.fillStyle = glow
       ctx.beginPath()
-      ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(255, 60, 60, 0.3)'
-      ctx.lineWidth = 1
-      ctx.stroke()
+      ctx.arc(centerX, centerY, glowR, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Saturn-style rings: the audio waveform bends around a tilted ellipse instead of radial spikes.
+      // The frequency sample scrolls around the ring over time so the waveform visibly travels and ripples.
+      // Each ring is one continuous closed loop; a linear gradient shades it smoothly from dark (far/back)
+      // to light (near/front), and the loop is split into back/front passes so it weaves through the planet.
+      const n = smoothedAudioRef.current.length
+      const projectRing = (ri: number, mult: number) => {
+        const baseR = baseRadius * mult
+        const pts: { x: number; y: number; df: number }[] = []
+        for (let i = 0; i < angles.length; i++) {
+          const angle = angles[i]
+          const df = (Math.sin(angle) + 1) / 2 // 0 = farthest back, 1 = nearest front
+          const di = Math.floor((i * 1.3 + timeRef.current * 26 + ri * 47) % (n * 0.55))
+          const amp = (smoothedAudioRef.current[di] || 0) / 255
+          const rad = baseR + amp * baseRadius * (0.4 + ri * 0.12) * (0.82 + 0.18 * df) * (1 + beatDecay * 1.6)
+          const x0 = Math.cos(angle) * rad
+          const y0 = Math.sin(angle) * rad * ringSquash
+          pts.push({ x: centerX + x0 * cosT - y0 * sinT, y: centerY + x0 * sinT + y0 * cosT, df })
+        }
+        return pts
+      }
+      // Screen point at a fixed extreme angle (no audio wobble) — anchors the depth gradient.
+      const anchor = (mult: number, front: boolean) => {
+        const baseR = baseRadius * mult
+        const angle = front ? Math.PI / 2 : -Math.PI / 2
+        const x0 = Math.cos(angle) * baseR
+        const y0 = Math.sin(angle) * baseR * ringSquash
+        return { x: centerX + x0 * cosT - y0 * sinT, y: centerY + x0 * sinT + y0 * cosT }
+      }
+      const ringsPts = RING_BANDS.map((b, ri) => projectRing(ri, b.mult))
+
+      const strokePass = (wantFront: boolean) => {
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
+        ctx.shadowColor = 'rgba(255, 0, 0, 0.85)'
+        RING_BANDS.forEach((b, ri) => {
+          const pts = ringsPts[ri]
+          const pB = anchor(b.mult, false)
+          const pF = anchor(b.mult, true)
+          const level = (0.45 + 0.55 * bass) * b.intensity
+          const g = ctx.createLinearGradient(pB.x, pB.y, pF.x, pF.y)
+          g.addColorStop(0, `rgba(140, 0, 0, ${Math.min(1, 0.22 * level + 0.12)})`)
+          g.addColorStop(0.5, `rgba(200, 0, 0, ${Math.min(1, 0.5 * level + 0.14)})`)
+          g.addColorStop(1, `rgba(255, 0, 0, ${Math.min(1, 0.95 * level + 0.16)})`)
+          ctx.strokeStyle = g
+          ctx.lineWidth = (wantFront ? 2.8 : 1.9) + beatDecay * 1.6
+          ctx.shadowBlur = (wantFront ? 14 : 6) + beatDecay * 16
+          ctx.beginPath()
+          const N = pts.length
+          for (let k = 0; k < N; k++) {
+            const a = pts[k], c = pts[(k + 1) % N]
+            const isFront = (a.df + c.df) / 2 >= 0.5
+            if (isFront !== wantFront) continue
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(c.x, c.y)
+          }
+          ctx.stroke()
+        })
+        ctx.shadowBlur = 0
+      }
+
+      // Back half of every ring passes behind the sphere
+      strokePass(false)
 
       // Transform vertices
       const rotX = rotationRef.current.x + autoRotX
@@ -274,31 +346,27 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
         ctx.lineTo(centerX + v3.x * currentRadius, centerY + v3.y * currentRadius)
         ctx.closePath()
 
-        // Dark red fill - darker in back, brighter in front
-        const brightness = 20 + depthFactor * 40
-        ctx.fillStyle = `rgba(${brightness}, ${brightness * 0.15}, ${brightness * 0.15}, ${0.5 + depthFactor * 0.4})`
+        // Pure red fill - darker in back, brighter in front (matches the rings)
+        const brightness = 24 + depthFactor * 52
+        ctx.fillStyle = `rgba(${brightness}, 0, 0, ${0.5 + depthFactor * 0.42})`
         ctx.fill()
       })
 
-      // Draw edges - ALL RED tones
+      // Draw edges - pure red, dark (back) to #ff0000 (front), same ramp as the rings
       edges.forEach(edge => {
         const depthFactor = (edge.z + 1) / 2
         const alpha = 0.3 + depthFactor * 0.7
-
-        // Red gradient: dark red (back) to bright red (front)
-        const r = Math.floor(150 + depthFactor * 105)
-        const g = Math.floor(30 + depthFactor * 40)
-        const b = Math.floor(30 + depthFactor * 40)
+        const r = Math.floor(140 + depthFactor * 115)
 
         ctx.beginPath()
         ctx.moveTo(edge.x1, edge.y1)
         ctx.lineTo(edge.x2, edge.y2)
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        ctx.strokeStyle = `rgba(${r}, 0, 0, ${alpha})`
         ctx.lineWidth = 0.5 + depthFactor * 1
         ctx.stroke()
       })
 
-      // Draw vertices as red dots
+      // Draw vertices as pure red dots
       transformed.forEach(v => {
         const depthFactor = (v.z + 1) / 2
         if (depthFactor > 0.35) {
@@ -306,19 +374,25 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
           const screenY = centerY + v.y * currentRadius
           ctx.beginPath()
           ctx.arc(screenX, screenY, 1.5 + depthFactor * 1.5, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255, ${60 + depthFactor * 60}, ${60 + depthFactor * 60}, ${0.5 + depthFactor * 0.4})`
+          ctx.fillStyle = `rgba(255, 0, 0, ${0.5 + depthFactor * 0.4})`
           ctx.fill()
         }
       })
 
-      // Inner glow
-      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, currentRadius * 0.5)
-      gradient.addColorStop(0, 'rgba(255, 50, 50, 0.15)')
+      // Inner core glow — offset toward upper-left to fake a light source and give the sphere volume
+      const lightX = centerX - currentRadius * 0.28
+      const lightY = centerY - currentRadius * 0.32
+      const gradient = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, currentRadius * 0.85)
+      gradient.addColorStop(0, `rgba(255, 0, 0, ${0.28 + bass * 0.18})`)
+      gradient.addColorStop(0.5, 'rgba(210, 0, 0, 0.10)')
       gradient.addColorStop(1, 'transparent')
       ctx.fillStyle = gradient
       ctx.beginPath()
-      ctx.arc(centerX, centerY, currentRadius * 0.5, 0, Math.PI * 2)
+      ctx.arc(centerX, centerY, currentRadius, 0, Math.PI * 2)
       ctx.fill()
+
+      // Front half of every ring, drawn last so it crosses over the sphere
+      strokePass(true)
 
       if (!reduceMotion) animationId = requestAnimationFrame(animate)
     }

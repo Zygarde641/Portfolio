@@ -54,9 +54,12 @@ export default function HotBar({ activeSection, onNavigate }: HotBarProps) {
               {isActive && (
                 <motion.div
                   layoutId="nav-active"
-                  className="absolute inset-x-1 bottom-0 h-[2px] bg-red-500 pointer-events-none"
+                  // Fixed width + auto-margin centering keeps the shared-layout animation a pure
+                  // horizontal slide (no scaleX), so the bar and its glow never distort between
+                  // labels of different widths.
+                  className="absolute inset-x-0 mx-auto bottom-0 h-[2px] w-7 md:w-9 rounded-full bg-red-500 pointer-events-none"
                   style={{ boxShadow: '0 0 8px rgba(255,51,51,0.6)' }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  transition={{ type: 'spring', stiffness: 420, damping: 36 }}
                 />
               )}
             </button>
