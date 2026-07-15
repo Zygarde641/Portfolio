@@ -173,7 +173,7 @@ export default function MyProjects() {
                 href={`https://github.com/Zygarde641/${project.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded border border-hairline hover:border-red-500 hover:text-red-500 font-mono text-[11px] tracking-[0.15em] text-gray-300 transition-colors"
+                className="mt-auto inline-flex items-center gap-1.5 self-start px-3 py-1.5 rounded border border-hairline hover:border-red-500 hover:text-[#ff0000] font-mono text-[11px] tracking-[0.15em] text-gray-300 transition-colors"
               >
                 <Github className="w-3 h-3" />
                 VIEW CODE
@@ -193,7 +193,7 @@ export default function MyProjects() {
             href="https://github.com/Zygarde641?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded border border-red-500/50 font-mono text-xs tracking-[0.2em] text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded border border-red-500/50 font-mono text-xs tracking-[0.2em] text-[#ff0000] hover:bg-red-500 hover:text-white transition-colors"
           >
             ALL REPOSITORIES
             <ArrowUpRight className="w-3.5 h-3.5" />

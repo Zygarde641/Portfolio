@@ -509,7 +509,9 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
           {isPlaying ? '● SIGNAL LIVE' : '○ SIGNAL MUTED'}
         </p>
         <p className="absolute bottom-11 left-16 font-mono text-[10px] tracking-[0.25em] text-neutral-600">
-          EST. 2022 — CHANDIGARH, IN
+          CHANDIGARH UNIVERSITY, IN
+          <br />
+          2022 - 2026
         </p>
       </motion.div>
 

@@ -30,7 +30,7 @@ export default function WelcomePage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="font-mono text-[11px] md:text-xs tracking-[0.3em] text-red-500 mb-6"
+          className="font-mono text-[11px] md:text-xs tracking-[0.3em] text-[#ff0000] mb-6"
         >
           01 / WELCOME
         </motion.p>
@@ -52,14 +52,14 @@ export default function WelcomePage() {
             transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="block text-white"
           >
-            systems <span className="text-red-500">—</span> and the
+            systems <span className="text-[#ff0000]">—</span> and the
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="block text-red-500"
+            className="block text-[#ff0000]"
           >
             pipelines that ship them.
           </motion.span>
@@ -119,7 +119,7 @@ export default function WelcomePage() {
       {/* Section indicator */}
       <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-2">
         <div className="w-px h-16 bg-red-500/30" />
-        <span className="text-red-500 font-mono text-xs tracking-[0.25em] rotate-90 origin-center whitespace-nowrap">
+        <span className="text-[#ff0000] font-mono text-xs tracking-[0.25em] rotate-90 origin-center whitespace-nowrap">
           01 / WELCOME
         </span>
         <div className="w-px h-16 bg-red-500/30" />

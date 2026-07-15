@@ -37,7 +37,7 @@ export default function AboutMe() {
   }, [isInView])
 
   const CodeforcesSvg = () => (
-    <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+    <svg className="w-5 h-5 text-[#ff0000]" viewBox="0 0 24 24" fill="currentColor">
       <path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" />
     </svg>
   )
@@ -190,7 +190,7 @@ export default function AboutMe() {
                   className="p-2.5 border border-hairline glass hover:border-red-500/60 transition-colors"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5 text-red-500" />
+                  <social.icon className="w-5 h-5 text-[#ff0000]" />
                 </motion.a>
               ))}
 

@@ -6,21 +6,7 @@ const clusters = [
   { label: 'LANGUAGES', items: ['C++', 'Python', 'JavaScript'] },
   { label: 'FRONTEND', items: ['React', 'Next.js', 'Tailwind CSS'] },
   { label: 'BACKEND & DATA', items: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB'] },
-  {
-    label: 'DEVOPS & CLOUD',
-    items: [
-      'Docker',
-      'Kubernetes',
-      'AWS',
-      'Terraform',
-      'Jenkins',
-      'GitHub Actions',
-      'Prometheus',
-      'Grafana',
-      'Vercel',
-      'Render',
-    ],
-  },
+  { label: 'DEVOPS & CLOUD', items: ['Docker', 'Kubernetes', 'AWS', 'Terraform', 'Jenkins', 'GitHub Actions', 'Prometheus', 'Grafana', 'Vercel', 'Render']},
   { label: 'AI / ML', items: ['PyTorch', 'TensorFlow', 'NumPy', 'Pandas', 'Matplotlib'] },
 ]
 

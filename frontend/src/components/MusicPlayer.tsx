@@ -179,9 +179,9 @@ export function MusicProvider({ children }: MusicPlayerProps) {
           aria-label={isPlaying ? 'Mute music' : 'Play music'}
         >
           {isPlaying ? (
-            <Volume2 className="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform" />
+            <Volume2 className="w-5 h-5 text-[#ff0000] group-hover:scale-110 transition-transform" />
           ) : (
-            <VolumeX className="w-5 h-5 text-gray-500 group-hover:text-red-500 transition-colors" />
+            <VolumeX className="w-5 h-5 text-gray-500 group-hover:text-[#ff0000] transition-colors" />
           )}
 
           {/* Pulse animation when playing */}
