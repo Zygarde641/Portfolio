@@ -195,22 +195,25 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
         beatDecay *= 0.9
       }
 
-      // Mouse rotation
+      // Mouse rotation — snappier follow (higher lerp factor) and a bit more sensitive to cursor position
       const dx = mouseRef.current.x - centerX
       const dy = mouseRef.current.y - centerY
-      targetRotationRef.current.y = dx * 0.0008
-      targetRotationRef.current.x = dy * 0.0008
+      targetRotationRef.current.y = dx * 0.0011
+      targetRotationRef.current.x = dy * 0.0011
 
-      rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.02
-      rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.02
+      rotationRef.current.x += (targetRotationRef.current.x - rotationRef.current.x) * 0.07
+      rotationRef.current.y += (targetRotationRef.current.y - rotationRef.current.y) * 0.07
 
       const autoRotY = timeRef.current * 0.15
       const autoRotX = Math.sin(timeRef.current * 0.08) * 0.15
 
       // Ring orientation follows the cursor: horizontal cursor turns the ring plane,
       // vertical cursor opens or flattens it. Reuses the same smoothed rotation the sphere uses.
-      const ringTilt = BASE_TILT + rotationRef.current.y * 1.6
-      const ringSquash = Math.max(0.12, Math.min(0.55, BASE_SQUASH + rotationRef.current.x * 1.1))
+      // Clamped symmetrically around 0 (not around BASE_TILT) — a tilt of -67° sits much closer to the
+      // -90° edge-on singularity than +67° sits to +90°, so a base-relative clamp still looked far more
+      // "open" on one side. Clamping equidistant from vertical on both sides keeps left/right swing equal.
+      const ringTilt = Math.max(-0.75, Math.min(0.75, BASE_TILT + rotationRef.current.y * 1.6))
+      const ringSquash = Math.max(0.16, Math.min(0.5, BASE_SQUASH + rotationRef.current.x * 1.3))
       const cosT = Math.cos(ringTilt), sinT = Math.sin(ringTilt)
 
       // Audio reactivity - beat-based bounce
