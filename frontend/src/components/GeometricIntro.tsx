@@ -209,9 +209,8 @@ export default function GeometricIntro({ onEnter }: GeometricIntroProps) {
 
       // Ring orientation follows the cursor: horizontal cursor turns the ring plane,
       // vertical cursor opens or flattens it. Reuses the same smoothed rotation the sphere uses.
-      // Tilt is clamped so it always keeps a Saturn lean and never crosses to a flat horizontal band.
-      const ringTilt = Math.max(-0.85, Math.min(-0.24, BASE_TILT + rotationRef.current.y * 1.6))
-      const ringSquash = Math.max(0.2, Math.min(0.5, BASE_SQUASH + rotationRef.current.x * 1.1))
+      const ringTilt = BASE_TILT + rotationRef.current.y * 1.6
+      const ringSquash = Math.max(0.12, Math.min(0.55, BASE_SQUASH + rotationRef.current.x * 1.1))
       const cosT = Math.cos(ringTilt), sinT = Math.sin(ringTilt)
 
       // Audio reactivity - beat-based bounce
