@@ -102,8 +102,8 @@ export default function MyExperiences() {
 
         {/* Horizontal Timeline */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Timeline rail with nodes */}
-          <div className="relative flex items-center mb-0">
+          {/* Timeline rail with nodes — desktop only (the rail is hidden on mobile, leaving lone dots) */}
+          <div className="relative md:flex items-center mb-0 hidden">
             <motion.div
               initial={{ scaleX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
